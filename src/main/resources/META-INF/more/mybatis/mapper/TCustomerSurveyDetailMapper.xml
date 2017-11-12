@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.more.wechat.publish.survey.mapper.TCustomerSurveyDetailMapper">
+  <resultMap id="BaseResultMap" type="com.more.wechat.publish.survey.model.TCustomerSurveyDetail">
+    <id column="DETAIL_ID" jdbcType="BIGINT" property="detailId" />
+    <result column="SURVEY_ID" jdbcType="BIGINT" property="surveyId" />
+    <result column="QUESTION_CODE" jdbcType="VARCHAR" property="questionCode" />
+    <result column="QUESTION_OPTION_ID" jdbcType="BIGINT" property="questionOptionId" />
+    <result column="QUESTION_OPTION_CODE" jdbcType="VARCHAR" property="questionOptionCode" />
+    <result column="QUESTION_ANSWER_TXT1" jdbcType="VARCHAR" property="questionAnswerTxt1" />
+    <result column="QUESTION_ANSWER_TXT2" jdbcType="VARCHAR" property="questionAnswerTxt2" />
+    <result column="QUESTION_ANSWER_TXT3" jdbcType="VARCHAR" property="questionAnswerTxt3" />
+    <result column="QUESTION_ANSWER_TXT4" jdbcType="VARCHAR" property="questionAnswerTxt4" />
+    <result column="RESERVED_FIELD1" jdbcType="VARCHAR" property="reservedField1" />
+    <result column="RESERVED_FIELD2" jdbcType="VARCHAR" property="reservedField2" />
+    <result column="RESERVED_FIELD3" jdbcType="VARCHAR" property="reservedField3" />
+    <result column="INSERT_BY" jdbcType="VARCHAR" property="insertBy" />
+    <result column="INSERT_TIME" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="INSERT_TIMESTAMP" jdbcType="TIMESTAMP" property="insertTimestamp" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_TIMESTAMP" jdbcType="TIMESTAMP" property="updateTimestamp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    DETAIL_ID, SURVEY_ID, QUESTION_CODE, QUESTION_OPTION_ID, QUESTION_OPTION_CODE, 
+    QUESTION_ANSWER_TXT1, QUESTION_ANSWER_TXT2, QUESTION_ANSWER_TXT3, QUESTION_ANSWER_TXT4, 
+    RESERVED_FIELD1, RESERVED_FIELD2, RESERVED_FIELD3, INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, 
+    UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_customer_survey_detail
+    where DETAIL_ID = #{detailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_customer_survey_detail
+    where DETAIL_ID = #{detailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.more.wechat.publish.survey.model.TCustomerSurveyDetail">
+    insert into t_customer_survey_detail (DETAIL_ID, SURVEY_ID, 
+      QUESTION_CODE, QUESTION_OPTION_ID, QUESTION_OPTION_CODE, 
+      QUESTION_ANSWER_TXT1, QUESTION_ANSWER_TXT2, 
+      QUESTION_ANSWER_TXT3, QUESTION_ANSWER_TXT4, 
+      RESERVED_FIELD1, RESERVED_FIELD2, RESERVED_FIELD3, 
+      INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, 
+      UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
+      )
+    values (#{detailId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, 
+      #{questionCode,jdbcType=VARCHAR}, #{questionOptionId,jdbcType=BIGINT}, #{questionOptionCode,jdbcType=VARCHAR}, 
+      #{questionAnswerTxt1,jdbcType=VARCHAR}, #{questionAnswerTxt2,jdbcType=VARCHAR}, 
+      #{questionAnswerTxt3,jdbcType=VARCHAR}, #{questionAnswerTxt4,jdbcType=VARCHAR}, 
+      #{reservedField1,jdbcType=VARCHAR}, #{reservedField2,jdbcType=VARCHAR}, #{reservedField3,jdbcType=VARCHAR}, 
+      #{insertBy,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, #{insertTimestamp,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateTimestamp,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.more.wechat.publish.survey.model.TCustomerSurveyDetail">
+    insert into t_customer_survey_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailId != null">
+        DETAIL_ID,
+      </if>
+      <if test="surveyId != null">
+        SURVEY_ID,
+      </if>
+      <if test="questionCode != null">
+        QUESTION_CODE,
+      </if>
+      <if test="questionOptionId != null">
+        QUESTION_OPTION_ID,
+      </if>
+      <if test="questionOptionCode != null">
+        QUESTION_OPTION_CODE,
+      </if>
+      <if test="questionAnswerTxt1 != null">
+        QUESTION_ANSWER_TXT1,
+      </if>
+      <if test="questionAnswerTxt2 != null">
+        QUESTION_ANSWER_TXT2,
+      </if>
+      <if test="questionAnswerTxt3 != null">
+        QUESTION_ANSWER_TXT3,
+      </if>
+      <if test="questionAnswerTxt4 != null">
+        QUESTION_ANSWER_TXT4,
+      </if>
+      <if test="reservedField1 != null">
+        RESERVED_FIELD1,
+      </if>
+      <if test="reservedField2 != null">
+        RESERVED_FIELD2,
+      </if>
+      <if test="reservedField3 != null">
+        RESERVED_FIELD3,
+      </if>
+      <if test="insertBy != null">
+        INSERT_BY,
+      </if>
+      <if test="insertTime != null">
+        INSERT_TIME,
+      </if>
+      <if test="insertTimestamp != null">
+        INSERT_TIMESTAMP,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateTimestamp != null">
+        UPDATE_TIMESTAMP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="detailId != null">
+        #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="questionCode != null">
+        #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionId != null">
+        #{questionOptionId,jdbcType=BIGINT},
+      </if>
+      <if test="questionOptionCode != null">
+        #{questionOptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt1 != null">
+        #{questionAnswerTxt1,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt2 != null">
+        #{questionAnswerTxt2,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt3 != null">
+        #{questionAnswerTxt3,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt4 != null">
+        #{questionAnswerTxt4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedField1 != null">
+        #{reservedField1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedField2 != null">
+        #{reservedField2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedField3 != null">
+        #{reservedField3,jdbcType=VARCHAR},
+      </if>
+      <if test="insertBy != null">
+        #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertTimestamp != null">
+        #{insertTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTimestamp != null">
+        #{updateTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.more.wechat.publish.survey.model.TCustomerSurveyDetail">
+    update t_customer_survey_detail
+    <set>
+      <if test="surveyId != null">
+        SURVEY_ID = #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="questionCode != null">
+        QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionId != null">
+        QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT},
+      </if>
+      <if test="questionOptionCode != null">
+        QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt1 != null">
+        QUESTION_ANSWER_TXT1 = #{questionAnswerTxt1,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt2 != null">
+        QUESTION_ANSWER_TXT2 = #{questionAnswerTxt2,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt3 != null">
+        QUESTION_ANSWER_TXT3 = #{questionAnswerTxt3,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt4 != null">
+        QUESTION_ANSWER_TXT4 = #{questionAnswerTxt4,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedField1 != null">
+        RESERVED_FIELD1 = #{reservedField1,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedField2 != null">
+        RESERVED_FIELD2 = #{reservedField2,jdbcType=VARCHAR},
+      </if>
+      <if test="reservedField3 != null">
+        RESERVED_FIELD3 = #{reservedField3,jdbcType=VARCHAR},
+      </if>
+      <if test="insertBy != null">
+        INSERT_BY = #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        INSERT_TIME = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertTimestamp != null">
+        INSERT_TIMESTAMP = #{insertTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTimestamp != null">
+        UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where DETAIL_ID = #{detailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.more.wechat.publish.survey.model.TCustomerSurveyDetail">
+    update t_customer_survey_detail
+    set SURVEY_ID = #{surveyId,jdbcType=BIGINT},
+      QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT},
+      QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
+      QUESTION_ANSWER_TXT1 = #{questionAnswerTxt1,jdbcType=VARCHAR},
+      QUESTION_ANSWER_TXT2 = #{questionAnswerTxt2,jdbcType=VARCHAR},
+      QUESTION_ANSWER_TXT3 = #{questionAnswerTxt3,jdbcType=VARCHAR},
+      QUESTION_ANSWER_TXT4 = #{questionAnswerTxt4,jdbcType=VARCHAR},
+      RESERVED_FIELD1 = #{reservedField1,jdbcType=VARCHAR},
+      RESERVED_FIELD2 = #{reservedField2,jdbcType=VARCHAR},
+      RESERVED_FIELD3 = #{reservedField3,jdbcType=VARCHAR},
+      INSERT_BY = #{insertBy,jdbcType=VARCHAR},
+      INSERT_TIME = #{insertTime,jdbcType=TIMESTAMP},
+      INSERT_TIMESTAMP = #{insertTimestamp,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP}
+    where DETAIL_ID = #{detailId,jdbcType=BIGINT}
+  </update>
+</mapper>

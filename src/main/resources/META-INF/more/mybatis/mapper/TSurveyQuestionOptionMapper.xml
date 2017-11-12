@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.more.wechat.publish.survey.mapper.TSurveyQuestionOptionMapper">
+  <resultMap id="BaseResultMap" type="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
+    <id column="QUESTION_OPTION_ID" jdbcType="BIGINT" property="questionOptionId" />
+    <result column="QUESTION_ID" jdbcType="BIGINT" property="questionId" />
+    <result column="QUESTION_OPTION_CODE" jdbcType="VARCHAR" property="questionOptionCode" />
+    <result column="QUESTION_OPTION_DESC" jdbcType="VARCHAR" property="questionOptionDesc" />
+    <result column="SUB_QUESTION_FLAG" jdbcType="INTEGER" property="subQuestionFlag" />
+    <result column="REF_QUESTION_ID" jdbcType="BIGINT" property="refQuestionId" />
+    <result column="INSERT_BY" jdbcType="VARCHAR" property="insertBy" />
+    <result column="INSERT_TIME" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="INSERT_TIMESTAMP" jdbcType="TIMESTAMP" property="insertTimestamp" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_TIMESTAMP" jdbcType="TIMESTAMP" property="updateTimestamp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    QUESTION_OPTION_ID, QUESTION_ID, QUESTION_OPTION_CODE, QUESTION_OPTION_DESC, SUB_QUESTION_FLAG, 
+    REF_QUESTION_ID, INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, UPDATE_BY, UPDATE_TIME, 
+    UPDATE_TIMESTAMP
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_survey_question_option
+    where QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_survey_question_option
+    where QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
+    insert into t_survey_question_option (QUESTION_OPTION_ID, QUESTION_ID, QUESTION_OPTION_CODE, 
+      QUESTION_OPTION_DESC, SUB_QUESTION_FLAG, REF_QUESTION_ID, 
+      INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, 
+      UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
+      )
+    values (#{questionOptionId,jdbcType=BIGINT}, #{questionId,jdbcType=BIGINT}, #{questionOptionCode,jdbcType=VARCHAR}, 
+      #{questionOptionDesc,jdbcType=VARCHAR}, #{subQuestionFlag,jdbcType=INTEGER}, #{refQuestionId,jdbcType=BIGINT}, 
+      #{insertBy,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, #{insertTimestamp,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateTimestamp,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
+    insert into t_survey_question_option
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionOptionId != null">
+        QUESTION_OPTION_ID,
+      </if>
+      <if test="questionId != null">
+        QUESTION_ID,
+      </if>
+      <if test="questionOptionCode != null">
+        QUESTION_OPTION_CODE,
+      </if>
+      <if test="questionOptionDesc != null">
+        QUESTION_OPTION_DESC,
+      </if>
+      <if test="subQuestionFlag != null">
+        SUB_QUESTION_FLAG,
+      </if>
+      <if test="refQuestionId != null">
+        REF_QUESTION_ID,
+      </if>
+      <if test="insertBy != null">
+        INSERT_BY,
+      </if>
+      <if test="insertTime != null">
+        INSERT_TIME,
+      </if>
+      <if test="insertTimestamp != null">
+        INSERT_TIMESTAMP,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateTimestamp != null">
+        UPDATE_TIMESTAMP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="questionOptionId != null">
+        #{questionOptionId,jdbcType=BIGINT},
+      </if>
+      <if test="questionId != null">
+        #{questionId,jdbcType=BIGINT},
+      </if>
+      <if test="questionOptionCode != null">
+        #{questionOptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionDesc != null">
+        #{questionOptionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="subQuestionFlag != null">
+        #{subQuestionFlag,jdbcType=INTEGER},
+      </if>
+      <if test="refQuestionId != null">
+        #{refQuestionId,jdbcType=BIGINT},
+      </if>
+      <if test="insertBy != null">
+        #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertTimestamp != null">
+        #{insertTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTimestamp != null">
+        #{updateTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
+    update t_survey_question_option
+    <set>
+      <if test="questionId != null">
+        QUESTION_ID = #{questionId,jdbcType=BIGINT},
+      </if>
+      <if test="questionOptionCode != null">
+        QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionDesc != null">
+        QUESTION_OPTION_DESC = #{questionOptionDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="subQuestionFlag != null">
+        SUB_QUESTION_FLAG = #{subQuestionFlag,jdbcType=INTEGER},
+      </if>
+      <if test="refQuestionId != null">
+        REF_QUESTION_ID = #{refQuestionId,jdbcType=BIGINT},
+      </if>
+      <if test="insertBy != null">
+        INSERT_BY = #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        INSERT_TIME = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insertTimestamp != null">
+        INSERT_TIMESTAMP = #{insertTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTimestamp != null">
+        UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
+    update t_survey_question_option
+    set QUESTION_ID = #{questionId,jdbcType=BIGINT},
+      QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
+      QUESTION_OPTION_DESC = #{questionOptionDesc,jdbcType=VARCHAR},
+      SUB_QUESTION_FLAG = #{subQuestionFlag,jdbcType=INTEGER},
+      REF_QUESTION_ID = #{refQuestionId,jdbcType=BIGINT},
+      INSERT_BY = #{insertBy,jdbcType=VARCHAR},
+      INSERT_TIME = #{insertTime,jdbcType=TIMESTAMP},
+      INSERT_TIMESTAMP = #{insertTimestamp,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP}
+    where QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT}
+  </update>
+</mapper>

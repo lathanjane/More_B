@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.more.wechat.publish.survey.mapper.TSurveyRuleMapper">
+  <resultMap id="BaseResultMap" type="com.more.wechat.publish.survey.model.TSurveyRule">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="SURVEY_TEMPLATE_ID" jdbcType="BIGINT" property="surveyTemplateId" />
+    <result column="QUESTION_CODE" jdbcType="VARCHAR" property="questionCode" />
+    <result column="QUESTION_ANSWER_RULE" jdbcType="VARCHAR" property="questionAnswerRule" />
+    <result column="QUESTION_OPTION_CODE" jdbcType="VARCHAR" property="questionOptionCode" />
+    <result column="QUESTION_ANSWER_TXT1" jdbcType="VARCHAR" property="questionAnswerTxt1" />
+    <result column="QUESTION_ANSWER_TXT2" jdbcType="VARCHAR" property="questionAnswerTxt2" />
+    <result column="QUESTION_ANSWER_TXT3" jdbcType="VARCHAR" property="questionAnswerTxt3" />
+    <result column="QUESTION_ANSWER_TXT4" jdbcType="VARCHAR" property="questionAnswerTxt4" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, SURVEY_TEMPLATE_ID, QUESTION_CODE, QUESTION_ANSWER_RULE, QUESTION_OPTION_CODE, 
+    QUESTION_ANSWER_TXT1, QUESTION_ANSWER_TXT2, QUESTION_ANSWER_TXT3, QUESTION_ANSWER_TXT4
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_survey_rule
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_survey_rule
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.more.wechat.publish.survey.model.TSurveyRule">
+    insert into t_survey_rule (ID, SURVEY_TEMPLATE_ID, QUESTION_CODE, 
+      QUESTION_ANSWER_RULE, QUESTION_OPTION_CODE, 
+      QUESTION_ANSWER_TXT1, QUESTION_ANSWER_TXT2, 
+      QUESTION_ANSWER_TXT3, QUESTION_ANSWER_TXT4)
+    values (#{id,jdbcType=INTEGER}, #{surveyTemplateId,jdbcType=BIGINT}, #{questionCode,jdbcType=VARCHAR}, 
+      #{questionAnswerRule,jdbcType=VARCHAR}, #{questionOptionCode,jdbcType=VARCHAR}, 
+      #{questionAnswerTxt1,jdbcType=VARCHAR}, #{questionAnswerTxt2,jdbcType=VARCHAR}, 
+      #{questionAnswerTxt3,jdbcType=VARCHAR}, #{questionAnswerTxt4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.more.wechat.publish.survey.model.TSurveyRule">
+    insert into t_survey_rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="surveyTemplateId != null">
+        SURVEY_TEMPLATE_ID,
+      </if>
+      <if test="questionCode != null">
+        QUESTION_CODE,
+      </if>
+      <if test="questionAnswerRule != null">
+        QUESTION_ANSWER_RULE,
+      </if>
+      <if test="questionOptionCode != null">
+        QUESTION_OPTION_CODE,
+      </if>
+      <if test="questionAnswerTxt1 != null">
+        QUESTION_ANSWER_TXT1,
+      </if>
+      <if test="questionAnswerTxt2 != null">
+        QUESTION_ANSWER_TXT2,
+      </if>
+      <if test="questionAnswerTxt3 != null">
+        QUESTION_ANSWER_TXT3,
+      </if>
+      <if test="questionAnswerTxt4 != null">
+        QUESTION_ANSWER_TXT4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="surveyTemplateId != null">
+        #{surveyTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="questionCode != null">
+        #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerRule != null">
+        #{questionAnswerRule,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionCode != null">
+        #{questionOptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt1 != null">
+        #{questionAnswerTxt1,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt2 != null">
+        #{questionAnswerTxt2,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt3 != null">
+        #{questionAnswerTxt3,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt4 != null">
+        #{questionAnswerTxt4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.more.wechat.publish.survey.model.TSurveyRule">
+    update t_survey_rule
+    <set>
+      <if test="surveyTemplateId != null">
+        SURVEY_TEMPLATE_ID = #{surveyTemplateId,jdbcType=BIGINT},
+      </if>
+      <if test="questionCode != null">
+        QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerRule != null">
+        QUESTION_ANSWER_RULE = #{questionAnswerRule,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionCode != null">
+        QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt1 != null">
+        QUESTION_ANSWER_TXT1 = #{questionAnswerTxt1,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt2 != null">
+        QUESTION_ANSWER_TXT2 = #{questionAnswerTxt2,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt3 != null">
+        QUESTION_ANSWER_TXT3 = #{questionAnswerTxt3,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerTxt4 != null">
+        QUESTION_ANSWER_TXT4 = #{questionAnswerTxt4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.more.wechat.publish.survey.model.TSurveyRule">
+    update t_survey_rule
+    set SURVEY_TEMPLATE_ID = #{surveyTemplateId,jdbcType=BIGINT},
+      QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
+      QUESTION_ANSWER_RULE = #{questionAnswerRule,jdbcType=VARCHAR},
+      QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
+      QUESTION_ANSWER_TXT1 = #{questionAnswerTxt1,jdbcType=VARCHAR},
+      QUESTION_ANSWER_TXT2 = #{questionAnswerTxt2,jdbcType=VARCHAR},
+      QUESTION_ANSWER_TXT3 = #{questionAnswerTxt3,jdbcType=VARCHAR},
+      QUESTION_ANSWER_TXT4 = #{questionAnswerTxt4,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
