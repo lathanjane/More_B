@@ -14,4 +14,6 @@ public interface TSurveyQuestionMapper {
     int updateByPrimaryKeySelective(TSurveyQuestion record);
 
     int updateByPrimaryKey(TSurveyQuestion record);
+    
+    TSurveyQuestion selectByTSurveyQuestion(TSurveyQuestion record);
 }

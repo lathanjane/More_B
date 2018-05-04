@@ -5,7 +5,6 @@
     <id column="DETAIL_ID" jdbcType="BIGINT" property="detailId" />
     <result column="SURVEY_ID" jdbcType="BIGINT" property="surveyId" />
     <result column="QUESTION_CODE" jdbcType="VARCHAR" property="questionCode" />
-    <result column="QUESTION_OPTION_ID" jdbcType="BIGINT" property="questionOptionId" />
     <result column="QUESTION_OPTION_CODE" jdbcType="VARCHAR" property="questionOptionCode" />
     <result column="QUESTION_ANSWER_TXT1" jdbcType="VARCHAR" property="questionAnswerTxt1" />
     <result column="QUESTION_ANSWER_TXT2" jdbcType="VARCHAR" property="questionAnswerTxt2" />
@@ -20,12 +19,13 @@
     <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
     <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="UPDATE_TIMESTAMP" jdbcType="TIMESTAMP" property="updateTimestamp" />
+    <result column="QUESTION_OPTION_ID" jdbcType="BIGINT" property="questionOptionId" />
   </resultMap>
   <sql id="Base_Column_List">
-    DETAIL_ID, SURVEY_ID, QUESTION_CODE, QUESTION_OPTION_ID, QUESTION_OPTION_CODE, 
-    QUESTION_ANSWER_TXT1, QUESTION_ANSWER_TXT2, QUESTION_ANSWER_TXT3, QUESTION_ANSWER_TXT4, 
-    RESERVED_FIELD1, RESERVED_FIELD2, RESERVED_FIELD3, INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, 
-    UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
+    DETAIL_ID, SURVEY_ID, QUESTION_CODE, QUESTION_OPTION_CODE, QUESTION_ANSWER_TXT1, 
+    QUESTION_ANSWER_TXT2, QUESTION_ANSWER_TXT3, QUESTION_ANSWER_TXT4, RESERVED_FIELD1, 
+    RESERVED_FIELD2, RESERVED_FIELD3, INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, UPDATE_BY, 
+    UPDATE_TIME, UPDATE_TIMESTAMP, QUESTION_OPTION_ID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -38,22 +38,20 @@
     where DETAIL_ID = #{detailId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.more.wechat.publish.survey.model.TCustomerSurveyDetail">
-    insert into t_customer_survey_detail (DETAIL_ID, SURVEY_ID, 
-      QUESTION_CODE, QUESTION_OPTION_ID, QUESTION_OPTION_CODE, 
-      QUESTION_ANSWER_TXT1, QUESTION_ANSWER_TXT2, 
-      QUESTION_ANSWER_TXT3, QUESTION_ANSWER_TXT4, 
-      RESERVED_FIELD1, RESERVED_FIELD2, RESERVED_FIELD3, 
-      INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, 
-      UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
-      )
-    values (#{detailId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, 
-      #{questionCode,jdbcType=VARCHAR}, #{questionOptionId,jdbcType=BIGINT}, #{questionOptionCode,jdbcType=VARCHAR}, 
-      #{questionAnswerTxt1,jdbcType=VARCHAR}, #{questionAnswerTxt2,jdbcType=VARCHAR}, 
-      #{questionAnswerTxt3,jdbcType=VARCHAR}, #{questionAnswerTxt4,jdbcType=VARCHAR}, 
-      #{reservedField1,jdbcType=VARCHAR}, #{reservedField2,jdbcType=VARCHAR}, #{reservedField3,jdbcType=VARCHAR}, 
-      #{insertBy,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, #{insertTimestamp,jdbcType=TIMESTAMP}, 
-      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateTimestamp,jdbcType=TIMESTAMP}
-      )
+    insert into t_customer_survey_detail (DETAIL_ID, SURVEY_ID, QUESTION_CODE, 
+      QUESTION_OPTION_CODE, QUESTION_ANSWER_TXT1, 
+      QUESTION_ANSWER_TXT2, QUESTION_ANSWER_TXT3, 
+      QUESTION_ANSWER_TXT4, RESERVED_FIELD1, RESERVED_FIELD2, 
+      RESERVED_FIELD3, INSERT_BY, INSERT_TIME, 
+      INSERT_TIMESTAMP, UPDATE_BY, UPDATE_TIME, 
+      UPDATE_TIMESTAMP, QUESTION_OPTION_ID)
+    values (#{detailId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, #{questionCode,jdbcType=VARCHAR}, 
+      #{questionOptionCode,jdbcType=VARCHAR}, #{questionAnswerTxt1,jdbcType=VARCHAR}, 
+      #{questionAnswerTxt2,jdbcType=VARCHAR}, #{questionAnswerTxt3,jdbcType=VARCHAR}, 
+      #{questionAnswerTxt4,jdbcType=VARCHAR}, #{reservedField1,jdbcType=VARCHAR}, #{reservedField2,jdbcType=VARCHAR}, 
+      #{reservedField3,jdbcType=VARCHAR}, #{insertBy,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, 
+      #{insertTimestamp,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateTimestamp,jdbcType=TIMESTAMP}, #{questionOptionId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.more.wechat.publish.survey.model.TCustomerSurveyDetail">
     insert into t_customer_survey_detail
@@ -66,9 +64,6 @@
       </if>
       <if test="questionCode != null">
         QUESTION_CODE,
-      </if>
-      <if test="questionOptionId != null">
-        QUESTION_OPTION_ID,
       </if>
       <if test="questionOptionCode != null">
         QUESTION_OPTION_CODE,
@@ -112,6 +107,9 @@
       <if test="updateTimestamp != null">
         UPDATE_TIMESTAMP,
       </if>
+      <if test="questionOptionId != null">
+        QUESTION_OPTION_ID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="detailId != null">
@@ -122,9 +120,6 @@
       </if>
       <if test="questionCode != null">
         #{questionCode,jdbcType=VARCHAR},
-      </if>
-      <if test="questionOptionId != null">
-        #{questionOptionId,jdbcType=BIGINT},
       </if>
       <if test="questionOptionCode != null">
         #{questionOptionCode,jdbcType=VARCHAR},
@@ -168,6 +163,9 @@
       <if test="updateTimestamp != null">
         #{updateTimestamp,jdbcType=TIMESTAMP},
       </if>
+      <if test="questionOptionId != null">
+        #{questionOptionId,jdbcType=BIGINT},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.more.wechat.publish.survey.model.TCustomerSurveyDetail">
@@ -178,9 +176,6 @@
       </if>
       <if test="questionCode != null">
         QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
-      </if>
-      <if test="questionOptionId != null">
-        QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT},
       </if>
       <if test="questionOptionCode != null">
         QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
@@ -224,6 +219,9 @@
       <if test="updateTimestamp != null">
         UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP},
       </if>
+      <if test="questionOptionId != null">
+        QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT},
+      </if>
     </set>
     where DETAIL_ID = #{detailId,jdbcType=BIGINT}
   </update>
@@ -231,7 +229,6 @@
     update t_customer_survey_detail
     set SURVEY_ID = #{surveyId,jdbcType=BIGINT},
       QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
-      QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT},
       QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
       QUESTION_ANSWER_TXT1 = #{questionAnswerTxt1,jdbcType=VARCHAR},
       QUESTION_ANSWER_TXT2 = #{questionAnswerTxt2,jdbcType=VARCHAR},
@@ -245,7 +242,8 @@
       INSERT_TIMESTAMP = #{insertTimestamp,jdbcType=TIMESTAMP},
       UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-      UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP}
+      UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP},
+      QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT}
     where DETAIL_ID = #{detailId,jdbcType=BIGINT}
   </update>
 </mapper>

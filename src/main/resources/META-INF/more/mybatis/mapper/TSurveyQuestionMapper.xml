@@ -6,11 +6,10 @@
     <result column="QUESTION_CODE" jdbcType="VARCHAR" property="questionCode" />
     <result column="SURVEY_TEMPLATE_ID" jdbcType="BIGINT" property="surveyTemplateId" />
     <result column="SURVEY_QUESTION_NAME" jdbcType="VARCHAR" property="surveyQuestionName" />
-    <result column="NAME_DISPLAY_FLAG" jdbcType="SMALLINT" property="nameDisplayFlag" />
-    <result column="TOP_QUESTION_FLAG" jdbcType="INTEGER" property="topQuestionFlag" />
-    <result column="QUESTION_TYPE" jdbcType="INTEGER" property="questionType" />
-    <result column="QUESTION_ANSWER_NUM" jdbcType="INTEGER" property="questionAnswerNum" />
-    <result column="QUESTION_ORDER" jdbcType="INTEGER" property="questionOrder" />
+    <result column="PARENT_QUESTION" jdbcType="VARCHAR" property="parentQuestion" />
+    <result column="QUESTION_TYPE" jdbcType="VARCHAR" property="questionType" />
+    <result column="QUESTION_ANSWER_NUM" jdbcType="VARCHAR" property="questionAnswerNum" />
+    <result column="QUESTION_ORDER" jdbcType="VARCHAR" property="questionOrder" />
     <result column="INSERT_BY" jdbcType="VARCHAR" property="insertBy" />
     <result column="INSERT_TIME" jdbcType="TIMESTAMP" property="insertTime" />
     <result column="INSERT_TIMESTAMP" jdbcType="TIMESTAMP" property="insertTimestamp" />
@@ -19,9 +18,9 @@
     <result column="UPDATE_TIMESTAMP" jdbcType="TIMESTAMP" property="updateTimestamp" />
   </resultMap>
   <sql id="Base_Column_List">
-    QUESTION_ID, QUESTION_CODE, SURVEY_TEMPLATE_ID, SURVEY_QUESTION_NAME, NAME_DISPLAY_FLAG, 
-    TOP_QUESTION_FLAG, QUESTION_TYPE, QUESTION_ANSWER_NUM, QUESTION_ORDER, INSERT_BY, 
-    INSERT_TIME, INSERT_TIMESTAMP, UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
+    QUESTION_ID, QUESTION_CODE, SURVEY_TEMPLATE_ID, SURVEY_QUESTION_NAME, PARENT_QUESTION, 
+    QUESTION_TYPE, QUESTION_ANSWER_NUM, QUESTION_ORDER, INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, 
+    UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -35,17 +34,15 @@
   </delete>
   <insert id="insert" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestion">
     insert into t_survey_question (QUESTION_ID, QUESTION_CODE, SURVEY_TEMPLATE_ID, 
-      SURVEY_QUESTION_NAME, NAME_DISPLAY_FLAG, TOP_QUESTION_FLAG, 
-      QUESTION_TYPE, QUESTION_ANSWER_NUM, QUESTION_ORDER, 
-      INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, 
-      UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
-      )
+      SURVEY_QUESTION_NAME, PARENT_QUESTION, QUESTION_TYPE, 
+      QUESTION_ANSWER_NUM, QUESTION_ORDER, INSERT_BY, 
+      INSERT_TIME, INSERT_TIMESTAMP, UPDATE_BY, 
+      UPDATE_TIME, UPDATE_TIMESTAMP)
     values (#{questionId,jdbcType=BIGINT}, #{questionCode,jdbcType=VARCHAR}, #{surveyTemplateId,jdbcType=BIGINT}, 
-      #{surveyQuestionName,jdbcType=VARCHAR}, #{nameDisplayFlag,jdbcType=SMALLINT}, #{topQuestionFlag,jdbcType=INTEGER}, 
-      #{questionType,jdbcType=INTEGER}, #{questionAnswerNum,jdbcType=INTEGER}, #{questionOrder,jdbcType=INTEGER}, 
-      #{insertBy,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, #{insertTimestamp,jdbcType=TIMESTAMP}, 
-      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateTimestamp,jdbcType=TIMESTAMP}
-      )
+      #{surveyQuestionName,jdbcType=VARCHAR}, #{parentQuestion,jdbcType=VARCHAR}, #{questionType,jdbcType=VARCHAR}, 
+      #{questionAnswerNum,jdbcType=VARCHAR}, #{questionOrder,jdbcType=VARCHAR}, #{insertBy,jdbcType=VARCHAR}, 
+      #{insertTime,jdbcType=TIMESTAMP}, #{insertTimestamp,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateTimestamp,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestion">
     insert into t_survey_question
@@ -62,11 +59,8 @@
       <if test="surveyQuestionName != null">
         SURVEY_QUESTION_NAME,
       </if>
-      <if test="nameDisplayFlag != null">
-        NAME_DISPLAY_FLAG,
-      </if>
-      <if test="topQuestionFlag != null">
-        TOP_QUESTION_FLAG,
+      <if test="parentQuestion != null">
+        PARENT_QUESTION,
       </if>
       <if test="questionType != null">
         QUESTION_TYPE,
@@ -109,20 +103,17 @@
       <if test="surveyQuestionName != null">
         #{surveyQuestionName,jdbcType=VARCHAR},
       </if>
-      <if test="nameDisplayFlag != null">
-        #{nameDisplayFlag,jdbcType=SMALLINT},
-      </if>
-      <if test="topQuestionFlag != null">
-        #{topQuestionFlag,jdbcType=INTEGER},
+      <if test="parentQuestion != null">
+        #{parentQuestion,jdbcType=VARCHAR},
       </if>
       <if test="questionType != null">
-        #{questionType,jdbcType=INTEGER},
+        #{questionType,jdbcType=VARCHAR},
       </if>
       <if test="questionAnswerNum != null">
-        #{questionAnswerNum,jdbcType=INTEGER},
+        #{questionAnswerNum,jdbcType=VARCHAR},
       </if>
       <if test="questionOrder != null">
-        #{questionOrder,jdbcType=INTEGER},
+        #{questionOrder,jdbcType=VARCHAR},
       </if>
       <if test="insertBy != null">
         #{insertBy,jdbcType=VARCHAR},
@@ -156,20 +147,17 @@
       <if test="surveyQuestionName != null">
         SURVEY_QUESTION_NAME = #{surveyQuestionName,jdbcType=VARCHAR},
       </if>
-      <if test="nameDisplayFlag != null">
-        NAME_DISPLAY_FLAG = #{nameDisplayFlag,jdbcType=SMALLINT},
-      </if>
-      <if test="topQuestionFlag != null">
-        TOP_QUESTION_FLAG = #{topQuestionFlag,jdbcType=INTEGER},
+      <if test="parentQuestion != null">
+        PARENT_QUESTION = #{parentQuestion,jdbcType=VARCHAR},
       </if>
       <if test="questionType != null">
-        QUESTION_TYPE = #{questionType,jdbcType=INTEGER},
+        QUESTION_TYPE = #{questionType,jdbcType=VARCHAR},
       </if>
       <if test="questionAnswerNum != null">
-        QUESTION_ANSWER_NUM = #{questionAnswerNum,jdbcType=INTEGER},
+        QUESTION_ANSWER_NUM = #{questionAnswerNum,jdbcType=VARCHAR},
       </if>
       <if test="questionOrder != null">
-        QUESTION_ORDER = #{questionOrder,jdbcType=INTEGER},
+        QUESTION_ORDER = #{questionOrder,jdbcType=VARCHAR},
       </if>
       <if test="insertBy != null">
         INSERT_BY = #{insertBy,jdbcType=VARCHAR},
@@ -197,11 +185,10 @@
     set QUESTION_CODE = #{questionCode,jdbcType=VARCHAR},
       SURVEY_TEMPLATE_ID = #{surveyTemplateId,jdbcType=BIGINT},
       SURVEY_QUESTION_NAME = #{surveyQuestionName,jdbcType=VARCHAR},
-      NAME_DISPLAY_FLAG = #{nameDisplayFlag,jdbcType=SMALLINT},
-      TOP_QUESTION_FLAG = #{topQuestionFlag,jdbcType=INTEGER},
-      QUESTION_TYPE = #{questionType,jdbcType=INTEGER},
-      QUESTION_ANSWER_NUM = #{questionAnswerNum,jdbcType=INTEGER},
-      QUESTION_ORDER = #{questionOrder,jdbcType=INTEGER},
+      PARENT_QUESTION = #{parentQuestion,jdbcType=VARCHAR},
+      QUESTION_TYPE = #{questionType,jdbcType=VARCHAR},
+      QUESTION_ANSWER_NUM = #{questionAnswerNum,jdbcType=VARCHAR},
+      QUESTION_ORDER = #{questionOrder,jdbcType=VARCHAR},
       INSERT_BY = #{insertBy,jdbcType=VARCHAR},
       INSERT_TIME = #{insertTime,jdbcType=TIMESTAMP},
       INSERT_TIMESTAMP = #{insertTimestamp,jdbcType=TIMESTAMP},
@@ -210,4 +197,49 @@
       UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP}
     where QUESTION_ID = #{questionId,jdbcType=BIGINT}
   </update>
+    <select id="selectByTSurveyQuestion" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestion" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_survey_question
+    where 1 = 1
+      <if test="questionCode != null">
+        AND QUESTION_CODE = #{questionCode,jdbcType=VARCHAR}
+      </if>
+      <if test="surveyTemplateId != null">
+        AND SURVEY_TEMPLATE_ID = #{surveyTemplateId,jdbcType=BIGINT}
+      </if>
+      <if test="surveyQuestionName != null">
+        AND SURVEY_QUESTION_NAME = #{surveyQuestionName,jdbcType=VARCHAR}
+      </if>
+      <if test="parentQuestion != null">
+        AND PARENT_QUESTION = #{parentQuestion,jdbcType=VARCHAR}
+      </if>
+      <if test="questionType != null">
+        AND QUESTION_TYPE = #{questionType,jdbcType=VARCHAR}
+      </if>
+      <if test="questionAnswerNum != null">
+        AND QUESTION_ANSWER_NUM = #{questionAnswerNum,jdbcType=VARCHAR}
+      </if>
+      <if test="questionOrder != null">
+        AND QUESTION_ORDER = #{questionOrder,jdbcType=VARCHAR}
+      </if>
+      <if test="insertBy != null">
+        AND INSERT_BY = #{insertBy,jdbcType=VARCHAR}
+      </if>
+      <if test="insertTime != null">
+        AND INSERT_TIME = #{insertTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="insertTimestamp != null">
+        AND INSERT_TIMESTAMP = #{insertTimestamp,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateBy != null">
+        AND UPDATE_BY = #{updateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="updateTime != null">
+        AND UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTimestamp != null">
+        AND UPDATE_TIMESTAMP = #{updateTimestamp,jdbcType=TIMESTAMP}
+      </if>
+  </select>
 </mapper>

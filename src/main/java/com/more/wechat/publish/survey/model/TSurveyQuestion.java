@@ -11,15 +11,13 @@ public class TSurveyQuestion {
 
     private String surveyQuestionName;
 
-    private Short nameDisplayFlag;
+    private String parentQuestion;
 
-    private Integer topQuestionFlag;
+    private String questionType;
 
-    private Integer questionType;
+    private String questionAnswerNum;
 
-    private Integer questionAnswerNum;
-
-    private Integer questionOrder;
+    private String questionOrder;
 
     private String insertBy;
 
@@ -65,44 +63,36 @@ public class TSurveyQuestion {
         this.surveyQuestionName = surveyQuestionName == null ? null : surveyQuestionName.trim();
     }
 
-    public Short getNameDisplayFlag() {
-        return nameDisplayFlag;
+    public String getParentQuestion() {
+        return parentQuestion;
     }
 
-    public void setNameDisplayFlag(Short nameDisplayFlag) {
-        this.nameDisplayFlag = nameDisplayFlag;
+    public void setParentQuestion(String parentQuestion) {
+        this.parentQuestion = parentQuestion == null ? null : parentQuestion.trim();
     }
 
-    public Integer getTopQuestionFlag() {
-        return topQuestionFlag;
-    }
-
-    public void setTopQuestionFlag(Integer topQuestionFlag) {
-        this.topQuestionFlag = topQuestionFlag;
-    }
-
-    public Integer getQuestionType() {
+    public String getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(Integer questionType) {
-        this.questionType = questionType;
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType == null ? null : questionType.trim();
     }
 
-    public Integer getQuestionAnswerNum() {
+    public String getQuestionAnswerNum() {
         return questionAnswerNum;
     }
 
-    public void setQuestionAnswerNum(Integer questionAnswerNum) {
-        this.questionAnswerNum = questionAnswerNum;
+    public void setQuestionAnswerNum(String questionAnswerNum) {
+        this.questionAnswerNum = questionAnswerNum == null ? null : questionAnswerNum.trim();
     }
 
-    public Integer getQuestionOrder() {
+    public String getQuestionOrder() {
         return questionOrder;
     }
 
-    public void setQuestionOrder(Integer questionOrder) {
-        this.questionOrder = questionOrder;
+    public void setQuestionOrder(String questionOrder) {
+        this.questionOrder = questionOrder == null ? null : questionOrder.trim();
     }
 
     public String getInsertBy() {

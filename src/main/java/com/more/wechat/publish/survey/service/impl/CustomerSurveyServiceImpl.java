@@ -15,9 +15,11 @@ import com.more.wechat.publish.survey.common.DateUtil;
 import com.more.wechat.publish.survey.common.RandomUtil;
 import com.more.wechat.publish.survey.mapper.TCustomerSurveyDetailMapper;
 import com.more.wechat.publish.survey.mapper.TCustomerSurveyMapper;
+import com.more.wechat.publish.survey.mapper.TSurveyQuestionMapper;
 import com.more.wechat.publish.survey.model.CustomerSurveyModel;
 import com.more.wechat.publish.survey.model.TCustomerSurvey;
 import com.more.wechat.publish.survey.model.TCustomerSurveyDetail;
+import com.more.wechat.publish.survey.model.TSurveyQuestion;
 import com.more.wechat.publish.survey.service.CustomerSurveyService;
 
 @Service(CustomerSurveyService.BEAN_DEFAULT)
@@ -28,6 +30,8 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 	private TCustomerSurveyMapper TCustomerSurveyMapper;
 	@Autowired
 	private TCustomerSurveyDetailMapper TCustomerSurveyDetailMapper;
+	@Autowired
+	private TSurveyQuestionMapper TSurveyQuestionMapper;
 
 	@Override
 	public String saveCustomerSurvey(CustomerSurveyModel customerSurveyModel) {
@@ -47,7 +51,7 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 
 				TCustomerSurvey tCustomerSurvey = new TCustomerSurvey();
 				for (int i = 0; i < 100; i++) {
-					String answer = questionMap.get("question" + (i + 1));
+					String answer = questionMap.get("value" + (i + 1));
 					if (answer != null && answer.length() != 0) {
 						tCustomerSurvey = getCustomerSurvey(questionMap, surveyId, Long.valueOf(surveyTemplateId), i,
 								tCustomerSurvey);
@@ -57,7 +61,7 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 					TCustomerSurveyMapper.insert(tCustomerSurvey);
 				}
 				for (int i = 0; i < 100; i++) {
-					String answer = questionMap.get("question" + (i + 1));
+					String answer = questionMap.get("value" + (i + 1));
 					if (answer != null && answer.length() != 0) {
 						TCustomerSurveyDetail tCustomerSurveyDetail = getCustomerSurveyDetail(questionMap, surveyId,
 								Long.valueOf(surveyTemplateId), i);
@@ -68,7 +72,9 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 					}
 				}
 
-				return getRuleResult(answerMap);
+				String r = getRuleResult(answerMap);
+				logger.info("返回结果：" + r);
+				return r;
 			}
 
 			return "";
@@ -104,74 +110,37 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 			Long surveyTemplateId, int index) throws Exception {
 
 		TCustomerSurveyDetail tCustomerSurveyDetail = new TCustomerSurveyDetail();
-		String answer = questionMap.get("question" + (index + 1));
+		String answer = questionMap.get("value" + (index + 1));
 		if (answer != null && answer.length() != 0) {
-			logger.info("i = ", String.valueOf(index));
 			tCustomerSurveyDetail.setSurveyId(surveyId);
 			tCustomerSurveyDetail.setQuestionCode(String.valueOf(index + 1));
 			setCustomerSurveyDetailProperties(tCustomerSurveyDetail);
 
-			switch (index + 1) {
-			case 1:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 7:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 8:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 9:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 12:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 16:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 17:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 10:
-			case 11:
-			case 13:
-			case 15:
-			case 18:
-			case 19:
-			case 20:
-			case 25:
-			case 27:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 2:
-				tCustomerSurveyDetail.setQuestionOptionCode(answer);
-				break;
-			case 6:
-				tCustomerSurveyDetail.setQuestionAnswerTxt1(answer);
-				break;
-			case 3:
-			case 4:
-			case 5:
-			case 14:
-			case 21:
-			case 22:
-			case 23:
-			case 24:
-			case 26:
-			case 28:
-			case 30:
-			case 31:
-			case 32:
-			case 34:
-			case 35:
-				tCustomerSurveyDetail.setQuestionAnswerTxt1(answer);
-				break;
-			case 29:
-				String[] answerList = answer.split(",");
-				tCustomerSurveyDetail.setQuestionAnswerTxt1(answerList[0]);
-				tCustomerSurveyDetail.setQuestionAnswerTxt2(answerList[1]);
-				break;
+			TSurveyQuestion tSurveyQuestion = new TSurveyQuestion();
+			tSurveyQuestion.setQuestionCode(String.valueOf(index + 1));
+			tSurveyQuestion = TSurveyQuestionMapper.selectByTSurveyQuestion(tSurveyQuestion);
+
+			if (tSurveyQuestion != null && tSurveyQuestion.getQuestionType() != null
+					&& tSurveyQuestion.getQuestionType().length() != 0) {
+				// 3- 单选题
+				if (tSurveyQuestion.getQuestionType().equals("3") || tSurveyQuestion.getQuestionType().equals("1")) {
+					tCustomerSurveyDetail.setQuestionOptionCode(answer);
+				} else if (tSurveyQuestion.getQuestionType().equals("2")) {
+					// 2- 填空题
+					String[] answerList = answer.split(",");
+					if (answerList.length >= 1) {
+						tCustomerSurveyDetail.setQuestionAnswerTxt1(answerList[0]);
+					}
+					if (answerList.length >= 2) {
+						tCustomerSurveyDetail.setQuestionAnswerTxt2(answerList[1]);
+					}
+					if (answerList.length >= 3) {
+						tCustomerSurveyDetail.setQuestionAnswerTxt3(answerList[2]);
+					}
+					if (answerList.length >= 4) {
+						tCustomerSurveyDetail.setQuestionAnswerTxt4(answerList[3]);
+					}
+				}
 			}
 		}
 		return tCustomerSurveyDetail;
@@ -179,68 +148,9 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 
 	private Map<String, String> getAnswerMap(Map<String, String> questionMap, int index, Map<String, String> answerMap)
 			throws Exception {
-
-		String answer = questionMap.get("question" + (index + 1));
+		String answer = questionMap.get("value" + (index + 1));
 		if (answer != null && answer.length() != 0) {
-			logger.info("i = ", String.valueOf(index));
-
-			switch (index + 1) {
-			case 1:
-				answerMap.put("Answer1", answer);
-				break;
-			case 7:
-				answerMap.put("Answer7", answer);
-				break;
-			case 8:
-				answerMap.put("Answer8", answer);
-				break;
-			case 9:
-				answerMap.put("Answer9", answer);
-				break;
-			case 12:
-				answerMap.put("Answer12", answer);
-				break;
-			case 16:
-				answerMap.put("Answer16", answer);
-				break;
-			case 17:
-				answerMap.put("Answer17", answer);
-				break;
-			case 10:
-			case 11:
-			case 13:
-			case 15:
-			case 18:
-			case 19:
-			case 20:
-			case 25:
-			case 27:
-				break;
-			case 2:
-				answerMap.put("Answer2", answer);
-				break;
-			case 6:
-				answerMap.put("Answer6", answer);
-				break;
-			case 3:
-			case 4:
-			case 5:
-			case 14:
-			case 21:
-			case 22:
-			case 23:
-			case 24:
-			case 26:
-			case 28:
-			case 30:
-			case 31:
-			case 32:
-			case 34:
-			case 35:
-				break;
-			case 29:
-				break;
-			}
+			answerMap.put("Answer" + (index + 1), answer);
 		}
 		return answerMap;
 
@@ -248,61 +158,13 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 
 	private TCustomerSurvey getCustomerSurvey(Map<String, String> questionMap, Long surveyId, Long surveyTemplateId,
 			int index, TCustomerSurvey tCustomerSurvey) throws Exception {
-		String answer = questionMap.get("question" + (index + 1));
+		String answer = questionMap.get("value" + (index + 1));
 		if (answer != null && answer.length() != 0) {
-			logger.info("i = ", String.valueOf(index));
 			tCustomerSurvey.setSurveyId(surveyId);
 			tCustomerSurvey.setSurveyTemplateId(surveyTemplateId);
 			setCustomerSurveyProperties(tCustomerSurvey);
-
-			switch (index + 1) {
-			case 1:
-				break;
-			case 7:
-				break;
-			case 8:
-				break;
-			case 9:
-				break;
-			case 12:
-				break;
-			case 16:
-				break;
-			case 17:
-				break;
-			case 10:
-			case 11:
-			case 13:
-			case 15:
-			case 18:
-			case 19:
-			case 20:
-			case 25:
-			case 27:
-				break;
-			case 2:
+			if ((index + 1) == 2) {
 				tCustomerSurvey.setPhBirthday(DateUtil.parseDate(answer));
-				break;
-			case 6:
-				break;
-			case 3:
-			case 4:
-			case 5:
-			case 14:
-			case 21:
-			case 22:
-			case 23:
-			case 24:
-			case 26:
-			case 28:
-			case 30:
-			case 31:
-			case 32:
-			case 34:
-			case 35:
-				break;
-			case 29:
-				break;
 			}
 		}
 		return tCustomerSurvey;
@@ -320,11 +182,11 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 		boolean rule1 = false;//  年龄：男45以上，女55以上
 		if (answerMap.get("Answer1") != null && answerMap.get("Answer1").length() != 0
 				&& answerMap.get("Answer2") != null && answerMap.get("Answer2").length() != 0) {
-			if (answerMap.get("Answer1").equals(1)) {
+			if (answerMap.get("Answer1").equals("1")) {
 				if (AgeUtils.getAgeFromBirthTime(answerMap.get("Answer2")) > 45) {
 					rule1 = true;// 男45以上
 				}
-			} else if (answerMap.get("Answer1").equals(2)) {
+			} else if (answerMap.get("Answer1").equals("2")) {
 				if (AgeUtils.getAgeFromBirthTime(answerMap.get("Answer2")) > 55) {
 					rule1 = true; // 女55以上
 				}
@@ -358,7 +220,7 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 		}
 		boolean rule4 = false;//  BMI大于等于25
 		if (answerMap.get("Answer6") != null && answerMap.get("Answer6").length() != 0) {
-			if (Integer.valueOf(answerMap.get("Answer6")) >= 25) {
+			if (Double.valueOf(answerMap.get("Answer6")) >= 25) {
 				rule4 = true;
 			}
 		}
@@ -407,16 +269,16 @@ public class CustomerSurveyServiceImpl implements CustomerSurveyService {
 			trueRuleCount++;
 		}
 
-		if (answerMap.get("Answer7").equals(1) || answerMap.get("Answer12").equals(1)) {
+		if (answerMap.get("Answer7").equals("1") || answerMap.get("Answer12").equals("1")) {
 			return "D";
 		}
 		if (trueRuleCount <= 1) {
 			return "A";
 		} else {
-			if (answerMap.get("Answer1").equals(1)) {
+			if (answerMap.get("Answer1").equals("1")) {
 				return "B";
 			}
-			if (answerMap.get("Answer1").equals(0)) {
+			if (answerMap.get("Answer1").equals("2")) {
 				return "C";
 			}
 

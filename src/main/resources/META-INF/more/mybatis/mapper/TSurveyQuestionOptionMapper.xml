@@ -3,7 +3,7 @@
 <mapper namespace="com.more.wechat.publish.survey.mapper.TSurveyQuestionOptionMapper">
   <resultMap id="BaseResultMap" type="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
     <id column="QUESTION_OPTION_ID" jdbcType="BIGINT" property="questionOptionId" />
-    <result column="QUESTION_ID" jdbcType="BIGINT" property="questionId" />
+    <result column="QUESTION_CODE" jdbcType="BIGINT" property="questionCode" />
     <result column="QUESTION_OPTION_CODE" jdbcType="VARCHAR" property="questionOptionCode" />
     <result column="QUESTION_OPTION_DESC" jdbcType="VARCHAR" property="questionOptionDesc" />
     <result column="SUB_QUESTION_FLAG" jdbcType="INTEGER" property="subQuestionFlag" />
@@ -16,7 +16,7 @@
     <result column="UPDATE_TIMESTAMP" jdbcType="TIMESTAMP" property="updateTimestamp" />
   </resultMap>
   <sql id="Base_Column_List">
-    QUESTION_OPTION_ID, QUESTION_ID, QUESTION_OPTION_CODE, QUESTION_OPTION_DESC, SUB_QUESTION_FLAG, 
+    QUESTION_OPTION_ID, QUESTION_CODE, QUESTION_OPTION_CODE, QUESTION_OPTION_DESC, SUB_QUESTION_FLAG, 
     REF_QUESTION_ID, INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, UPDATE_BY, UPDATE_TIME, 
     UPDATE_TIMESTAMP
   </sql>
@@ -31,12 +31,12 @@
     where QUESTION_OPTION_ID = #{questionOptionId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
-    insert into t_survey_question_option (QUESTION_OPTION_ID, QUESTION_ID, QUESTION_OPTION_CODE, 
+    insert into t_survey_question_option (QUESTION_OPTION_ID, QUESTION_CODE, QUESTION_OPTION_CODE, 
       QUESTION_OPTION_DESC, SUB_QUESTION_FLAG, REF_QUESTION_ID, 
       INSERT_BY, INSERT_TIME, INSERT_TIMESTAMP, 
       UPDATE_BY, UPDATE_TIME, UPDATE_TIMESTAMP
       )
-    values (#{questionOptionId,jdbcType=BIGINT}, #{questionId,jdbcType=BIGINT}, #{questionOptionCode,jdbcType=VARCHAR}, 
+    values (#{questionOptionId,jdbcType=BIGINT}, #{questionCode,jdbcType=BIGINT}, #{questionOptionCode,jdbcType=VARCHAR}, 
       #{questionOptionDesc,jdbcType=VARCHAR}, #{subQuestionFlag,jdbcType=INTEGER}, #{refQuestionId,jdbcType=BIGINT}, 
       #{insertBy,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, #{insertTimestamp,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateTimestamp,jdbcType=TIMESTAMP}
@@ -48,8 +48,8 @@
       <if test="questionOptionId != null">
         QUESTION_OPTION_ID,
       </if>
-      <if test="questionId != null">
-        QUESTION_ID,
+      <if test="questionCode != null">
+        QUESTION_CODE,
       </if>
       <if test="questionOptionCode != null">
         QUESTION_OPTION_CODE,
@@ -86,8 +86,8 @@
       <if test="questionOptionId != null">
         #{questionOptionId,jdbcType=BIGINT},
       </if>
-      <if test="questionId != null">
-        #{questionId,jdbcType=BIGINT},
+      <if test="questionCode != null">
+        #{questionCode,jdbcType=BIGINT},
       </if>
       <if test="questionOptionCode != null">
         #{questionOptionCode,jdbcType=VARCHAR},
@@ -124,8 +124,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
     update t_survey_question_option
     <set>
-      <if test="questionId != null">
-        QUESTION_ID = #{questionId,jdbcType=BIGINT},
+      <if test="questionCode != null">
+        QUESTION_CODE = #{questionCode,jdbcType=BIGINT},
       </if>
       <if test="questionOptionCode != null">
         QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
@@ -162,7 +162,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.more.wechat.publish.survey.model.TSurveyQuestionOption">
     update t_survey_question_option
-    set QUESTION_ID = #{questionId,jdbcType=BIGINT},
+    set QUESTION_CODE = #{questionCode,jdbcType=BIGINT},
       QUESTION_OPTION_CODE = #{questionOptionCode,jdbcType=VARCHAR},
       QUESTION_OPTION_DESC = #{questionOptionDesc,jdbcType=VARCHAR},
       SUB_QUESTION_FLAG = #{subQuestionFlag,jdbcType=INTEGER},

@@ -5,7 +5,7 @@ import java.util.Date;
 public class TSurveyQuestionOption {
     private Long questionOptionId;
 
-    private Long questionId;
+    private Long questionCode;
 
     private String questionOptionCode;
 
@@ -35,12 +35,12 @@ public class TSurveyQuestionOption {
         this.questionOptionId = questionOptionId;
     }
 
-    public Long getQuestionId() {
-        return questionId;
+    public Long getQuestionCode() {
+        return questionCode;
     }
 
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
+    public void setQuestionCode(Long questionCode) {
+        this.questionCode = questionCode;
     }
 
     public String getQuestionOptionCode() {
